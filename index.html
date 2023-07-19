@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMI - Fitness Ratio</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <div><img src="img/png1.png" alt="img1"></div>
+
+        <div class="borderform">
+            <h2 class="headin">BMI Calculator</h2>
+
+            <form action="#">
+
+                <div class="box">
+                    <div class="b1">
+                        <label for="weight" class="weight">Weight (in Kg):</label>
+                        <input type="number" id="weight">
+                    </div>
+                    <div class="b2">
+                        <label for="height" class="height">Height(in cm):</label>
+                        <input type="number" id="height">
+                    </div>
+                    <div id="btn">
+                        <button>Calculate</button>
+                    </div>
+                    <div class="result">
+                        <h2 class="result1">Result</h2>
+                        <p id="result2"></p>
+                    </div>
+                    <div id="Advise">ADVISE</div>
+                </div>
+            </form>
+        </div>
+        <div><img src="img/png2.png" alt="img2"></div>
+
+    </div>
+    <script>
+        window.onload = () => {
+          const button = document.querySelector('#btn');
+          button.addEventListener('click', calculateBMI);
+        };
+      
+        function calculateBMI() {
+          const height = Number(document.querySelector('#height').value);
+          const weight = Number(document.querySelector('#weight').value);
+          const result = document.querySelector('#result2');
+          const advice = document.querySelector('#Advise');
+      
+          function calculateAdditionalWeight(height, bmi) {
+            const healthyBMI = 18.5;
+            const differenceFromHealthyBMI = Math.abs(healthyBMI - bmi);
+            return (differenceFromHealthyBMI * ((height * height) / 10000)).toFixed(2);
+          }
+
+          function calculateAdditionalWeight1(height, bmi) {
+            const healthyBMI = 24.9;
+            const differenceFromHealthyBMI = Math.abs(healthyBMI - bmi);
+            return (differenceFromHealthyBMI * ((height * height) / 10000)).toFixed(2);
+          }
+      
+          if (Number.isNaN(height) || height <= 0 || Number.isNaN(weight) || weight <= 0) {
+            result.innerText = "Please provide valid Height and Weight.";
+            advice.innerText = "";
+            return;
+          }
+      
+          const bmi = (weight / ((height * height) / 10000)).toFixed(2);
+      
+          if (bmi < 18.5) {
+            result.innerText = `Under Weight: BMI= ${bmi}`;
+            const additionalWeight = calculateAdditionalWeight(height, bmi);
+            advice.innerText = `You need to gain at least ${additionalWeight} kg more.`;
+          } else if (bmi >= 18.5 && bmi <= 24.9) {
+            result.innerText = `Normal Weight: BMI= ${bmi}`;
+            advice.innerText = "Congratulations! You have a balanced weight.";
+          } else if (bmi >= 25 && bmi <= 29.9) {
+            result.innerText = `Over Weight: BMI= ${bmi}`;
+            const additionalWeight = calculateAdditionalWeight1(height, bmi);
+            advice.innerText = `You need to lose at least ${additionalWeight} kg.`;
+          } else if (bmi >= 30 && bmi <= 34.9) {
+            result.innerText = `Obesity (Class I): BMI= ${bmi}`;
+            const additionalWeight = calculateAdditionalWeight1(height, bmi);
+            advice.innerText = `You need to lose at least ${additionalWeight} kg.`;
+          } else if (bmi >= 35 && bmi <= 39.9) {
+            result.innerText = `Obesity (Class II): BMI= ${bmi}`;
+            const additionalWeight = calculateAdditionalWeight1(height, bmi);
+            advice.innerText = `You need to lose at least ${additionalWeight} kg.`;
+          } else {
+            result.innerText = `Extreme Obesity: BMI= ${bmi}`;
+            const additionalWeight = calculateAdditionalWeight1(height, bmi);
+            advice.innerText = `You need to lose at least ${additionalWeight} kg.`;
+          }
+        }
+      </script>
+      
+</body>
+
+</html>
